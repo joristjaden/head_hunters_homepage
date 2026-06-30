@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Head-Hunters Friseursalon by Daniel Schuster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F0E8;
+      --green: #2D5016;
+      --black: #0A0A0A;
+      --white: #FFFFFF;
+      --gold: #C9A96E;
+      --shadow: 0 4px 24px rgba(0,0,0,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+    /* ── HEADER ── */
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.35s, box-shadow 0.35s;
+    }
+    #header.scrolled {
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    #header .logo img { height: 52px; transition: opacity 0.3s; }
+    #header .logo .logo-black { display: none; }
+    #header.scrolled .logo .logo-white { display: none; }
+    #header.scrolled .logo .logo-black { display: block; }
+
+    #header nav { display: flex; align-items: center; gap: 32px; }
+    #header nav a {
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--white);
+      transition: color 0.25s;
+      letter-spacing: 0.04em;
+    }
+    #header.scrolled nav a { color: var(--black); }
+    #header nav a:hover { color: var(--gold); }
+    #header.scrolled nav a:hover { color: var(--green); }
+    .btn-primary {
+      background: var(--green);
+      color: var(--white) !important;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-primary:hover { background: #3d6b1f; transform: translateY(-1px); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: background 0.3s; border-radius: 2px; }
+    #header.scrolled .hamburger span { background: var(--black); }
+
+    @media(max-width: 820px) {
+      #header { padding: 16px 20px; }
+      #header nav {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 24px 20px;
+        gap: 20px;
+        box-shadow: var(--shadow);
+      }
+      #header nav.open { display: flex; }
+      #header nav a { color: var(--black) !important; font-size: 16px; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      background: url('Homepage Hero Image (1000 x 550 px).png') center center / cover no-repeat;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.74) 45%, rgba(0,0,0,0.28) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      padding: 0 48px;
+    }
+    .hero-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+    .hero-content h1 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 24px rgba(0,0,0,0.7);
+    }
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 14px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
+    .hero-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 34px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      line-height: 1.6;
+    }
+    @media(max-width: 640px) {
+      .hero-content { padding: 0 20px; }
+    }
+
+    /* ── TRUST BAR ── */
+    #trust {
+      background: var(--cream);
+      padding: 60px 48px;
+    }
+    .trust-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+    .trust-item .trust-icon { font-size: 28px; margin-bottom: 10px; }
+    .trust-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+    .trust-label {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+      letter-spacing: 0.04em;
+    }
+    @media(max-width: 700px) {
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      #trust { padding: 48px 20px; }
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--white);
+      padding: 100px 48px;
+    }
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .about-photo {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.14);
+    }
+    .about-photo img { width: 100%; display: block; object-fit: cover; aspect-ratio: 4/5; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .about-text h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 22px;
+      color: var(--black);
+    }
+    .about-text p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: #444;
+      margin-bottom: 28px;
+    }
+    .about-bullets { list-style: none; margin-bottom: 28px; }
+    .about-bullets li {
+      font-size: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .about-bullets li:last-child { border: none; }
+    .check { color: var(--green); font-weight: 700; font-size: 16px; }
+    .about-ig {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .about-ig:hover { color: var(--gold); }
+    @media(max-width: 820px) {
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      #about { padding: 60px 20px; }
+    }
+
+    /* ── DIVIDER ── */
+    #divider {
+      position: relative;
+      height: 380px;
+      background: url('Outside_logo.png') center center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #divider::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+    .divider-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .divider-content h2 {
+      font-size: clamp(42px, 7vw, 88px);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+    }
+    .divider-est {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      color: var(--gold);
+      margin-top: 12px;
+      text-transform: uppercase;
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      background: var(--cream);
+      padding: 100px 48px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header h2 {
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 700;
+      color: var(--black);
+    }
+    .gallery-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: var(--shadow);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    @media(max-width: 820px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      #gallery { padding: 60px 20px; }
+    }
+    @media(max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CTA + MARQUEE ── */
+    #cta-section {
+      background: var(--white);
+      padding: 100px 48px 0;
+    }
+    .cta-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      padding-bottom: 80px;
+    }
+    .cta-text h2 {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 700;
+      line-height: 1.18;
+      margin-bottom: 16px;
+    }
+    .cta-sub {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 28px;
+      line-height: 1.65;
+    }
+    .cta-bullets { list-style: none; margin-bottom: 32px; }
+    .cta-bullets li {
+      font-size: 14px;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cta-bullets li:last-child { border: none; }
+    .cta-img {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.14);
+    }
+    .cta-img img { width: 100%; display: block; object-fit: cover; aspect-ratio: 4/5; }
+    @media(max-width: 820px) {
+      .cta-inner { grid-template-columns: 1fr; gap: 40px; }
+      #cta-section { padding: 60px 20px 0; }
+    }
+
+    /* Marquee */
+    .marquee-wrapper {
+      overflow: hidden;
+      background: var(--cream);
+      padding: 32px 0;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: marquee-scroll 42s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      position: relative;
+      width: 240px;
+      height: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
+    .marquee-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .marquee-caption {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(255,255,255,0.92);
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.03em;
+    }
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── PREISLISTE ── */
+    #prices {
+      background: var(--white);
+      padding: 100px 48px;
+    }
+    .price-tabs {
+      display: flex;
+      border: 2px solid var(--green);
+      border-radius: 8px;
+      overflow: hidden;
+      width: fit-content;
+      margin: 0 auto 48px;
+    }
+    .tab-btn {
+      padding: 12px 40px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--green);
+      transition: background 0.25s, color 0.25s;
+    }
+    .tab-btn.active { background: var(--green); color: var(--white); }
+    .tab-btn:hover:not(.active) { background: rgba(45,80,22,0.07); }
+
+    .price-panel { display: none; max-width: 700px; margin: 0 auto; }
+    .price-panel.active { display: block; }
+    .price-card {
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 32px 40px;
+      box-shadow: var(--shadow);
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .price-row:last-child { border: none; }
+    .price-name { font-size: 15px; color: #333; font-weight: 500; }
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green);
+    }
+    @media(max-width: 640px) {
+      #prices { padding: 60px 20px; }
+      .price-card { padding: 24px 20px; }
+      .tab-btn { padding: 12px 28px; }
+    }
+
+    /* ── ÖFFNUNGSZEITEN ── */
+    #hours {
+      background: var(--cream);
+      padding: 100px 48px;
+    }
+    .hours-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .hours-card, .address-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+    }
+    .open-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .open-status.open { background: #e6f4d7; color: #2D5016; }
+    .open-status.closed { background: #fde8e8; color: #c0392b; }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .open-status.open .status-dot { background: #2D5016; }
+    .open-status.closed .status-dot { background: #c0392b; }
+
+    .hours-list { list-style: none; }
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 8px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+    .hours-list li:last-child { border: none; }
+    .hours-list .day { font-weight: 500; color: #444; }
+    .hours-list .time-val { color: var(--green); font-weight: 600; }
+    .hours-list .closed-tag { color: #aaa; font-style: italic; }
+    .hours-list li.today { background: #f0f7e6; }
+
+    .address-card h3 {
+      font-size: 22px;
+      margin-bottom: 22px;
+      color: var(--black);
+    }
+    .address-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+    }
+    .address-line .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .btn-call {
+      display: block;
+      width: 100%;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 28px;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-call:hover { background: #3d6b1f; transform: translateY(-1px); }
+    @media(max-width: 820px) {
+      .hours-inner { grid-template-columns: 1fr; gap: 28px; }
+      #hours { padding: 60px 20px; }
+      .hours-card, .address-card { padding: 28px 20px; }
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--white);
+      padding: 100px 48px;
+    }
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .contact-info h3 { font-size: 26px; margin-bottom: 24px; }
+    .info-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      align-items: flex-start;
+    }
+    .info-row .icon { font-size: 18px; flex-shrink: 0; }
+    .social-links { margin-top: 28px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .social-link:hover { color: var(--gold); }
+
+    .contact-form { background: var(--cream); border-radius: 16px; padding: 44px; box-shadow: var(--shadow); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #555;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      background: var(--white);
+      color: var(--black);
+      transition: border-color 0.25s, box-shadow 0.25s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(45,80,22,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-success {
+      display: none;
+      background: #e6f4d7;
+      color: var(--green);
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+    @media(max-width: 820px) {
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      #contact { padding: 60px 20px; }
+      .contact-form { padding: 28px 20px; }
+    }
+
+    /* ── REVIEWS ── */
+    #reviews {
+      background: var(--cream);
+      padding: 100px 48px;
+      overflow: hidden;
+    }
+    .reviews-sub {
+      text-align: center;
+      color: var(--gold);
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 8px;
+      margin-bottom: 52px;
+    }
+    .review-carousel { position: relative; max-width: 860px; margin: 0 auto; }
+    .review-track { overflow: hidden; border-radius: 16px; }
+    .review-slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .review-slide { min-width: 100%; }
+    .review-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 44px;
+      text-align: center;
+    }
+    .review-stars { color: var(--gold); font-size: 22px; margin-bottom: 18px; letter-spacing: 2px; }
+    .review-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: #444;
+      font-style: italic;
+      margin-bottom: 22px;
+    }
+    .review-author { font-weight: 700; font-size: 15px; color: var(--black); }
+    .review-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .dot-btn {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      padding: 0;
+    }
+    .dot-btn.active { background: var(--green); transform: scale(1.3); }
+    @media(max-width: 640px) {
+      #reviews { padding: 60px 20px; }
+      .review-card { padding: 28px 20px; }
+      .review-text { font-size: 14px; }
+    }
+
+    /* ── MAP ── */
+    #map-section {
+      background: var(--white);
+      padding: 100px 48px;
+    }
+    .map-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .map-embed {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      height: 420px;
+    }
+    .map-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .map-info h3 { font-size: 26px; margin-bottom: 24px; }
+    .map-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #444;
+      align-items: flex-start;
+      line-height: 1.6;
+    }
+    .map-row .icon { font-size: 18px; flex-shrink: 0; }
+    .btn-outline {
+      display: inline-block;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      padding: 12px 24px;
+      border: 2px solid var(--green);
+      border-radius: 8px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+      margin-right: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-outline:hover { background: var(--green); color: var(--white); }
+    @media(max-width: 820px) {
+      .map-inner { grid-template-columns: 1fr; gap: 32px; }
+      #map-section { padding: 60px 20px; }
+      .map-embed { height: 280px; }
+    }
+
+    /* ── FOOTER ── */
+    #footer {
+      background: var(--green);
+      padding: 60px 48px 0;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+    }
+    .footer-brand img { height: 48px; margin-bottom: 14px; display: block; }
+    .footer-est {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .footer-nav h4, .footer-social h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .footer-nav a {
+      display: block;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .footer-nav a:hover { color: var(--white); }
+    .social-icon-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 14px;
+      transition: color 0.2s;
+    }
+    .social-icon-link:hover { color: var(--white); }
+    .social-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.14);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--white); }
+    @media(max-width: 820px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      #footer { padding: 48px 20px 0; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: 0.1s; }
+    .fade-up.d2 { transition-delay: 0.2s; }
+    .fade-up.d3 { transition-delay: 0.3s; }
+    .fade-up.d4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <a href="#hero" class="logo">
+    <img class="logo-white" src="head hunters logo white.png" alt="Head-Hunters Logo" />
+    <img class="logo-black" src="Head_Hunters_Logo black.png" alt="Head-Hunters Logo" />
+  </a>
+  <nav id="main-nav">
+    <a href="#about">Über uns</a>
+    <a href="#gallery">Galerie</a>
+    <a href="#prices">Preise</a>
+    <a href="#hours">Öffnungszeiten</a>
+    <a href="#reviews">Bewertungen</a>
+    <a href="#contact" class="btn-primary">Termin buchen</a>
+  </nav>
+  <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <p class="hero-label">Friseursalon in Norden</p>
+    <h1>Der Schnitt, der zu dir passt.</h1>
+    <p class="hero-sub">Daniel Schuster — Zertifizierter Friseurmeister für Damen & Herren</p>
+    <p class="hero-desc">Handwerk trifft Leidenschaft — für Ergebnisse, die wirklich begeistern.</p>
+    <a href="#contact" class="btn-primary">Termin buchen</a>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section id="trust">
+  <div class="trust-grid">
+    <div class="trust-item fade-up">
+      <div class="trust-icon">✂️</div>
+      <div class="trust-number"><span class="counter" data-target="10" data-suffix="+ Jahre">0</span></div>
+      <div class="trust-label">Friseurmeister</div>
+    </div>
+    <div class="trust-item fade-up d1">
+      <div class="trust-icon">⭐</div>
+      <div class="trust-number"><span class="counter" data-target="147" data-suffix="">0</span></div>
+      <div class="trust-label">Google Bewertungen</div>
+    </div>
+    <div class="trust-item fade-up d2">
+      <div class="trust-icon">🏆</div>
+      <div class="trust-number"><span class="counter" data-target="4.8" data-suffix="★" data-dec="1">0</span></div>
+      <div class="trust-label">Durchschnittsbewertung</div>
+    </div>
+    <div class="trust-item fade-up d3">
+      <div class="trust-icon">💯</div>
+      <div class="trust-number"><span class="counter" data-target="100" data-suffix="%">0</span></div>
+      <div class="trust-label">Zufriedenheitsgarantie</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-photo fade-up">
+      <img src="Statics  (15).png" alt="Daniel Schuster — Friseurmeister" />
+    </div>
+    <div class="about-text fade-up d2">
+      <span class="section-label">Der Meister</span>
+      <h2>Vom Lehrling zum Meister.</h2>
+      <p>Daniel Schuster ist zertifizierter Friseurmeister und Inhaber des Head-Hunters Salon in Norden. Mit über 10 Jahren Erfahrung verbindet er klassisches Handwerk mit modernen Techniken — für Ergebnisse, die begeistern.</p>
+      <ul class="about-bullets">
+        <li><span class="check">✓</span> Zertifizierter Friseurmeister</li>
+        <li><span class="check">✓</span> Spezialist für Balayage & Colorationen</li>
+        <li><span class="check">✓</span> Damen- & Herrenschnitte</li>
+        <li><span>📍</span> Osterstraße 44, 26506 Norden</li>
+      </ul>
+      <a href="https://www.instagram.com/headhuntersnorden" target="_blank" rel="noopener" class="about-ig">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        @headhuntersnorden
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- OUTDOOR LOGO DIVIDER -->
+<section id="divider">
+  <div class="divider-content fade-up">
+    <h2>Head-Hunters</h2>
+    <p class="divider-est">Est. 2018</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-header fade-up">
+    <span class="section-label">Einblicke</span>
+    <h2>Unsere Arbeiten</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item fade-up"><img src="Statics  (6).png" alt="Friseurarbeit" loading="lazy" /></div>
+    <div class="gallery-item fade-up d1"><img src="Statics  (9).png" alt="Friseurarbeit" loading="lazy" /></div>
+    <div class="gallery-item fade-up d2"><img src="Statics  (10).png" alt="Friseurarbeit" loading="lazy" /></div>
+    <div class="gallery-item fade-up d1"><img src="Statics  (11).png" alt="Friseurarbeit" loading="lazy" /></div>
+    <div class="gallery-item fade-up d2"><img src="Statics  (12).png" alt="Friseurarbeit" loading="lazy" /></div>
+    <div class="gallery-item fade-up d3"><img src="Statics  (13).png" alt="Friseurarbeit" loading="lazy" /></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-section">
+  <div class="cta-inner">
+    <div class="cta-text fade-up">
+      <span class="section-label">Inspiration</span>
+      <h2>Jeder Schnitt.<br/>Eine Geschichte.</h2>
+      <p class="cta-sub">Lass dich inspirieren — von Arbeiten, die für sich sprechen.</p>
+      <ul class="cta-bullets">
+        <li><span class="check">✓</span> Balayage & moderne Colorationstechniken</li>
+        <li><span class="check">✓</span> Klassische & zeitgemäße Herrenschnitte</li>
+        <li><span class="check">✓</span> Individuelle Damenfrisuren & Styling</li>
+        <li><span class="check">✓</span> Hochsteckfrisuren & Festtagslooks</li>
+      </ul>
+      <a href="#contact" class="btn-primary">Termin buchen</a>
+    </div>
+    <div class="cta-img fade-up d2">
+      <img src="Statics  (14).png" alt="Friseurarbeit" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrapper">
+  <div class="marquee-track">
+    <div class="marquee-item"><img src="Statics  (6).png" alt="Balayage" /><span class="marquee-caption">Balayage</span></div>
+    <div class="marquee-item"><img src="Statics  (7).png" alt="Damenfrisur" /><span class="marquee-caption">Damenfrisur</span></div>
+    <div class="marquee-item"><img src="Statics  (8).png" alt="Colorations-Highlight" /><span class="marquee-caption">Colorations-Highlight</span></div>
+    <div class="marquee-item"><img src="Statics  (9).png" alt="Balayage Natural" /><span class="marquee-caption">Balayage Natural</span></div>
+    <div class="marquee-item"><img src="Statics  (10).png" alt="Styling" /><span class="marquee-caption">Styling</span></div>
+    <div class="marquee-item"><img src="Statics  (11).png" alt="Schnitt & Föhnen" /><span class="marquee-caption">Schnitt & Föhnen</span></div>
+    <div class="marquee-item"><img src="Statics  (12).png" alt="Coloration" /><span class="marquee-caption">Coloration</span></div>
+    <div class="marquee-item"><img src="Statics  (13).png" alt="Highlights" /><span class="marquee-caption">Highlights</span></div>
+    <div class="marquee-item"><img src="Statics  (14).png" alt="Balayage Soft" /><span class="marquee-caption">Balayage Soft</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item"><img src="Statics  (6).png" alt="Balayage" /><span class="marquee-caption">Balayage</span></div>
+    <div class="marquee-item"><img src="Statics  (7).png" alt="Damenfrisur" /><span class="marquee-caption">Damenfrisur</span></div>
+    <div class="marquee-item"><img src="Statics  (8).png" alt="Colorations-Highlight" /><span class="marquee-caption">Colorations-Highlight</span></div>
+    <div class="marquee-item"><img src="Statics  (9).png" alt="Balayage Natural" /><span class="marquee-caption">Balayage Natural</span></div>
+    <div class="marquee-item"><img src="Statics  (10).png" alt="Styling" /><span class="marquee-caption">Styling</span></div>
+    <div class="marquee-item"><img src="Statics  (11).png" alt="Schnitt & Föhnen" /><span class="marquee-caption">Schnitt & Föhnen</span></div>
+    <div class="marquee-item"><img src="Statics  (12).png" alt="Coloration" /><span class="marquee-caption">Coloration</span></div>
+    <div class="marquee-item"><img src="Statics  (13).png" alt="Highlights" /><span class="marquee-caption">Highlights</span></div>
+    <div class="marquee-item"><img src="Statics  (14).png" alt="Balayage Soft" /><span class="marquee-caption">Balayage Soft</span></div>
+  </div>
+</div>
+
+<!-- PREISLISTE -->
+<section id="prices">
+  <div class="section-header fade-up">
+    <span class="section-label">Transparenz</span>
+    <h2>Unsere Preise</h2>
+  </div>
+  <div class="price-tabs fade-up d1">
+    <button class="tab-btn active" data-tab="damen">Damen</button>
+    <button class="tab-btn" data-tab="herren">Herren</button>
+  </div>
+  <div class="price-panel active fade-up d2" id="tab-damen">
+    <div class="price-card">
+      <div class="price-row"><span class="price-name">Waschen, Schneiden, Föhnen</span><span class="price-amount">ab 45€</span></div>
+      <div class="price-row"><span class="price-name">Balayage / Highlights</span><span class="price-amount">ab 120€</span></div>
+      <div class="price-row"><span class="price-name">Coloration (komplett)</span><span class="price-amount">ab 80€</span></div>
+      <div class="price-row"><span class="price-name">Dauerwelle</span><span class="price-amount">ab 90€</span></div>
+      <div class="price-row"><span class="price-name">Hochsteckfrisur</span><span class="price-amount">ab 60€</span></div>
+    </div>
+  </div>
+  <div class="price-panel fade-up d2" id="tab-herren">
+    <div class="price-card">
+      <div class="price-row"><span class="price-name">Haarschnitt</span><span class="price-amount">ab 25€</span></div>
+      <div class="price-row"><span class="price-name">Haarschnitt + Bart</span><span class="price-amount">ab 35€</span></div>
+      <div class="price-row"><span class="price-name">Bart trimmen</span><span class="price-amount">ab 15€</span></div>
+      <div class="price-row"><span class="price-name">Kopfwäsche & Styling</span><span class="price-amount">ab 20€</span></div>
+      <div class="price-row"><span class="price-name">Kinderhaarschnitt (bis 12 J.)</span><span class="price-amount">ab 18€</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ÖFFNUNGSZEITEN -->
+<section id="hours">
+  <div class="section-header fade-up">
+    <span class="section-label">Wann wir da sind</span>
+    <h2>Öffnungszeiten</h2>
+  </div>
+  <div class="hours-inner">
+    <div class="hours-card fade-up">
+      <div class="open-status" id="open-status">
+        <span class="status-dot"></span>
+        <span id="status-text">Prüfe Status…</span>
+      </div>
+      <ul class="hours-list" id="hours-list">
+        <li data-day="1"><span class="day">Montag</span><span class="time-val">09:00 – 21:00</span></li>
+        <li data-day="2"><span class="day">Dienstag</span><span class="time-val">09:00 – 21:00</span></li>
+        <li data-day="3"><span class="day">Mittwoch</span><span class="time-val">09:00 – 21:00</span></li>
+        <li data-day="4"><span class="day">Donnerstag</span><span class="closed-tag">Geschlossen</span></li>
+        <li data-day="5"><span class="day">Freitag</span><span class="closed-tag">Geschlossen</span></li>
+        <li data-day="6"><span class="day">Samstag</span><span class="closed-tag">Geschlossen</span></li>
+        <li data-day="0"><span class="day">Sonntag</span><span class="closed-tag">Geschlossen</span></li>
+      </ul>
+    </div>
+    <div class="address-card fade-up d2">
+      <h3>Besuche uns</h3>
+      <div class="address-line">
+        <span class="icon">📍</span>
+        <span>Osterstraße 44<br/>26506 Norden</span>
+      </div>
+      <div class="address-line">
+        <span class="icon">📞</span>
+        <span>04931 7693252</span>
+      </div>
+      <div class="address-line">
+        <span class="icon">🕐</span>
+        <span>Mo – Mi: 09:00 – 21:00<br/>Do – So: Geschlossen</span>
+      </div>
+      <a href="tel:049317693252" class="btn-call">📞 Termin buchen</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-up">
+    <span class="section-label">Kontakt</span>
+    <h2>Termin anfragen</h2>
+  </div>
+  <div class="contact-inner">
+    <div class="contact-info fade-up">
+      <h3>So erreichst du uns</h3>
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Osterstraße 44<br/>26506 Norden</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📞</span>
+        <span><a href="tel:049317693252" style="color:inherit;text-decoration:none;">04931 7693252</a></span>
+      </div>
+      <div class="info-row">
+        <span class="icon">🕐</span>
+        <span>Mo – Mi: 09:00 – 21:00<br/>Do – So: Geschlossen</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">✉️</span>
+        <span><a href="mailto:daniel.schuster1994@gmail.com" style="color:inherit;text-decoration:none;">daniel.schuster1994@gmail.com</a></span>
+      </div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/headhuntersnorden" target="_blank" rel="noopener" class="social-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=100025075434466" target="_blank" rel="noopener" class="social-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+      </div>
+    </div>
+    <div class="contact-form fade-up d2">
+      <form id="contact-form" action="mailto:daniel.schuster1994@gmail.com" method="post" enctype="text/plain">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vorname">Vorname</label>
+            <input type="text" id="vorname" name="Vorname" required placeholder="Max" />
+          </div>
+          <div class="form-group">
+            <label for="nachname">Nachname</label>
+            <input type="text" id="nachname" name="Nachname" required placeholder="Mustermann" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="E-Mail" required placeholder="max@email.de" />
+          </div>
+          <div class="form-group">
+            <label for="telefon">Telefon</label>
+            <input type="tel" id="telefon" name="Telefon" placeholder="+49 …" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="datum">Wunschdatum</label>
+          <input type="date" id="datum" name="Wunschdatum" />
+        </div>
+        <div class="form-group">
+          <label for="nachricht">Nachricht</label>
+          <textarea id="nachricht" name="Nachricht" placeholder="Was kann ich für dich tun?"></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;padding:14px;font-size:15px;border-radius:8px;">Termin buchen</button>
+        <div class="form-success" id="form-success">Vielen Dank! Wir melden uns bald bei dir. ✓</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-header fade-up">
+    <span class="section-label">Kundenstimmen</span>
+    <h2>Was unsere Kunden sagen</h2>
+    <p class="reviews-sub">★★★★★ 4.8 · 147 Google Bewertungen</p>
+  </div>
+  <div class="review-carousel fade-up d1">
+    <div class="review-track">
+      <div class="review-slides" id="review-slides">
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Daniel ist einfach der beste Friseur! Ich gehe schon lange zu ihm und bin jedes Mal super zufrieden. Er nimmt sich Zeit und berät ehrlich."</p><p class="review-author">Maike Ka</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Seit Eröffnung bin ich Kundin bei Daniel und habe mich noch nie bei einem Frisör so gut aufgehoben gefühlt. Daniel ist ein absoluter Herzensmensch."</p><p class="review-author">Katharina Thiele</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Daniel ist ein Meister seines Handwerks. Wunderschöne Farbergebnisse. Ich bin schon jahrelang sehr zufrieden."</p><p class="review-author">Nadine Moneth</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Der beste Friseur im Ort, da merkt man was gelerntes Handwerk bedeutet. Tolle Location, sehr angenehmes Feeling."</p><p class="review-author">Gudrun Quaas</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Meine Haare vertraue ich nur Daniel an. Friseur mit Herz, super sympathisch und lustig. Und dazu noch so kompetent."</p><p class="review-author">Lisa Rinjes</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Ich habe den Salon durch Zufall entdeckt und ich bin total begeistert. Daniel ist ein sehr liebenswerter Mensch."</p><p class="review-author">Mara Stammwitz</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Ganz einfach der beste Friseur weit und breit!"</p><p class="review-author">Claudia Made</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Daniel, cooler und witziger Typ. Ein Jongleur der Schere, ein Picasso der Farben. Spitze."</p><p class="review-author">Sonja Carow</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Daniel ist wirklich ne Maus, hatten super viel Spaß und meine Haare sehen klasse aus."</p><p class="review-author">Maike Bayerer</p></div></div>
+        <div class="review-slide"><div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Bester Frisör in Ostfriesland! Mein Besuch bei Daniel darf nie fehlen."</p><p class="review-author">stay_beautiful_90</p></div></div>
+      </div>
+    </div>
+    <div class="review-dots" id="review-dots"></div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <div class="section-header fade-up">
+    <span class="section-label">Anfahrt</span>
+    <h2>Mitten in Norden</h2>
+  </div>
+  <div class="map-inner">
+    <div class="map-embed fade-up">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2381.854!2d7.2045!3d53.5967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b6f0000000001%3A0x0!2sOsterstra%C3%9Fe%2044%2C%2026506%20Norden!5e0!3m2!1sde!2sde!4v1680000000000!5m2!1sde!2sde"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Head-Hunters Friseursalon — Osterstraße 44, 26506 Norden"
+      ></iframe>
+    </div>
+    <div class="map-info fade-up d2">
+      <h3>Head-Hunters Friseursalon</h3>
+      <div class="map-row"><span class="icon">📍</span><span>Osterstraße 44<br/>26506 Norden</span></div>
+      <div class="map-row"><span class="icon">📞</span><span>04931 7693252</span></div>
+      <div class="map-row"><span class="icon">🕐</span><span>Mo – Mi: 09:00 – 21:00<br/>Do – So: Geschlossen</span></div>
+      <a href="https://maps.google.com/?q=Osterstra%C3%9Fe+44,+26506+Norden,+Germany" target="_blank" rel="noopener" class="btn-outline">In Google Maps öffnen</a>
+      <a href="#contact" class="btn-primary">Termin buchen</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="head hunters logo white.png" alt="Head-Hunters" />
+      <p class="footer-est">Est. 2018</p>
+      <p class="footer-tagline">Zertifizierter Friseurmeister<br/>für Damen & Herren in Norden.</p>
+    </div>
+    <div class="footer-nav">
+      <h4>Navigation</h4>
+      <a href="#about">Über uns</a>
+      <a href="#gallery">Galerie</a>
+      <a href="#prices">Preise</a>
+      <a href="#hours">Öffnungszeiten</a>
+      <a href="#reviews">Bewertungen</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+    <div class="footer-social">
+      <h4>Folge uns</h4>
+      <a href="https://www.instagram.com/headhuntersnorden" target="_blank" rel="noopener" class="social-icon-link">
+        <span class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </span>
+        Instagram
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100025075434466" target="_blank" rel="noopener" class="social-icon-link">
+        <span class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </span>
+        Facebook
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Head-Hunters &nbsp;·&nbsp; <a href="#">Impressum</a> &nbsp;·&nbsp; <a href="#">Datenschutz</a> &nbsp;·&nbsp; <a href="#">cafelino</a></p>
+  </div>
+</footer>
+
+<script>
+  // HEADER SCROLL
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // HAMBURGER
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('main-nav');
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  // INTERSECTION OBSERVER
+  let countersTriggered = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      if (entry.target.closest('#trust') && !countersTriggered) {
+        countersTriggered = true;
+        document.querySelectorAll('.counter').forEach(el => {
+          const target = parseFloat(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          const dec = parseInt(el.dataset.dec || 0);
+          const start = performance.now();
+          const dur = 1800;
+          (function step(now) {
+            const p = Math.min((now - start) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = (ease * target).toFixed(dec) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          })(start);
+        });
+      }
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // PRICE TABS
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.price-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // OPEN/CLOSED STATUS
+  (function() {
+    const now = new Date();
+    const day = now.getDay();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const isOpen = [1,2,3].includes(day) && mins >= 540 && mins < 1260;
+    const el = document.getElementById('open-status');
+    el.className = 'open-status ' + (isOpen ? 'open' : 'closed');
+    document.getElementById('status-text').textContent = isOpen ? 'Aktuell geöffnet' : 'Aktuell geschlossen';
+    const todayRow = document.querySelector('#hours-list li[data-day="' + day + '"]');
+    if (todayRow) todayRow.classList.add('today');
+  })();
+
+  // REVIEW CAROUSEL
+  (function() {
+    const slides = document.getElementById('review-slides');
+    const dotsWrap = document.getElementById('review-dots');
+    const total = slides.children.length;
+    let cur = 0, timer;
+
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.className = 'dot-btn' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Bewertung ' + (i + 1));
+      d.addEventListener('click', () => { goTo(i); resetTimer(); });
+      dotsWrap.appendChild(d);
+    }
+
+    function goTo(n) {
+      cur = (n + total) % total;
+      slides.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      dotsWrap.querySelectorAll('.dot-btn').forEach((d, i) => d.classList.toggle('active', i === cur));
+    }
+
+    function resetTimer() { clearInterval(timer); timer = setInterval(() => goTo(cur + 1), 4000); }
+    resetTimer();
+  })();
+
+  // CONTACT FORM
+  document.getElementById('contact-form').addEventListener('submit', function() {
+    const el = document.getElementById('form-success');
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 5000);
+  });
+</script>
+</body>
+</html>
